@@ -1,0 +1,59 @@
+#!/bin/sh
+
+# my i3wm autostart file, based on this
+# https://github.com/fhaun/config-misc/blob/master/i3-stuff/auto-start-for-i3
+
+# Wait for program coming up
+wait_for_program () {
+    n=0
+    while true
+    do
+	# PID of last background command
+	if xdotool search --onlyvisible --pid $!; then
+	   break
+	else
+		# 10 seconds timeout
+		if [ $n -eq 10 ]; then
+		   # it's very good to be aware that something is
+		   # wrong, but sometimes it can be really annoying
+		   # xmessage "Error on executing"
+		   break
+		else
+			n=`expr $n + 1`
+			sleep 1
+		fi
+	fi
+    done
+}
+
+feh --bg-scale /home/suzuki/Obrazy/wallpapers/nebula.jpg &
+# /home/suzuki/pySelectWallpaper.py &
+
+# kmix
+# kmix --keepvisibility &
+#wait_for_program
+
+# terminals
+#rxvt-unicode -vb -sb &
+# konsole &
+terminator &
+#xterm &
+wait_for_program
+
+#i3-msg split v
+#tilda &
+#wait_for_program
+
+i3-msg workspace 2
+thunderbird &
+wait_for_program
+
+i3-msg workspace 3
+firefox &
+wait_for_program
+
+# i3-msg workspace 1
+
+# need a refresh
+xrefresh &
+exit 0
