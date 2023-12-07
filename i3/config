@@ -13,18 +13,22 @@ set $mod Mod4
 
 # font for window titles. ISO 10646 = Unicode
 font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+#font pango: Noto Sans 8 
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec konsole 
+bindsym $mod+Return exec xfce4-terminal
+# bindsym $mod+Return exec extratermqt
+# bindsym $mod+Return exec xterm
 
 # kill focused window
 bindsym $mod+Shift+Q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run
+#bindsym $mod+d exec dmenu_run
+bindsym $mod+d exec rofi -lines 12 -padding 18 -width 60 -location 0 -show drun -sidebar-mode -columns 3 -font 'Noto Sans 12'
 
 # change focus
 bindsym $mod+j focus left
@@ -35,7 +39,6 @@ bindsym $mod+semicolon focus right
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
-bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window
@@ -108,16 +111,9 @@ bindsym $mod+Shift+R restart
 bindsym $mod+Shift+E exit
 
 # volume control
-bindsym $mod+z exec pactl set-sink-volume alsa_output.pci-0000_00_03.0.hdmi-stereo +5% 
-bindsym $mod+x exec pactl set-sink-volume alsa_output.pci-0000_00_03.0.hdmi-stereo -5%
-bindsym $mod+c exec pactl set-sink-mute alsa_output.pci-0000_00_03.0.hdmi-stereo toggle
-
-# mocp control
-bindsym $mod+p exec mocp -G		# play/pause toggle
-bindsym $mod+n exec mocp -f		# play next song
-bindsym $mod+b exec mocp -r		# play previous song
-bindsym $mod+y exec mocp -k -10		# seek 10 seconds backward
-bindsym $mod+u exec mocp -k 10		# seek 10 seconds forward
+bindsym $mod+z exec amixer set 'Master' 5%+
+bindsym $mod+x exec amixer set 'Master' 5%-
+bindsym $mod+c exec amixer set 'Master' toggle
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -148,6 +144,10 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
+	output VGA1
+	#output HDMI1
+#    	font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+    	font pango:DejaVu Sans Mono 10 
         #status_command i3status -c /home/psz/.i3/i3status.conf
 	status_command /home/psz/.i3/i3status.sh
     colors {
@@ -162,5 +162,4 @@ bar {
 }
 
 exec --no-startup-id nm-applet
-#exec_always /home/suzuki/.i3/i3wmauto
 
